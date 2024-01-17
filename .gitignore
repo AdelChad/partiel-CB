@@ -10,7 +10,10 @@
 /www/var/log/
 /www/vendor/
 /www/assets/vendor/
+
 ###< symfony/framework-bundle ###
+
+.env
 
 ###> phpunit/phpunit ###
 /phpunit.xml
