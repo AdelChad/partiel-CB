@@ -1,4 +1,5 @@
 /data/
+/logs/
 /www/.env
 /www/.env.local
 /www/.env.local.php
@@ -8,6 +9,7 @@
 /www/var/cache/
 /www/var/log/
 /www/vendor/
+/www/assets/vendor/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

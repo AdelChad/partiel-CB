@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -37,9 +36,6 @@ class Product
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'product')]
     private Collection $users;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $image = null;
 
     public function __construct()
     {
@@ -146,18 +142,6 @@ class Product
         if ($this->users->removeElement($user)) {
             $user->removeProduct($this);
         }
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): static
-    {
-        $this->image = $image;
 
         return $this;
     }
