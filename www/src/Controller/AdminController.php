@@ -36,6 +36,7 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $fileImg = $form->get('fileImg')->getData();
+
             if($fileImg != null){
                 $slugger = new AsciiSlugger();
                 $slug = $slugger->slug($product->getTitle());

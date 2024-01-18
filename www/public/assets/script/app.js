@@ -1,5 +1,4 @@
 function getNameFile() {
-
     let fileInput =
         document.getElementById('product_fileImg') != null ?
             document.getElementById('product_fileImg'):
