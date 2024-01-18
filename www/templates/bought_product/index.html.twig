@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit acheté
+{% endblock %}
+
+{% block body %}
+	<link rel="stylesheet" href="{{ asset('/assets/sinan/productAssociate.css') }}">
+	<div class="container">
+		<div class="block-background">
+			<div class="row">
+				{% for product in BoughtProducts %}
+					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+						<div class="card-bought-product">
+							<img src="{{ product.image }}" class="card-img-top" alt="...">
+							<div class="card-content">
+								<div class="card-title">{{ product.title }}</div>
+								<p class="card-description">{{ product.description }}</p>
+								<div class="card-price">{{ product.price }}€</div>
+								<div class="row justify-content-center">
+									<a href="/assets/pdf/test1.pdf" class="btn btn-dark" download="notice-produit.pdf">Télécharger la notice</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Associer Utilisateur - Produit
+{% endblock %}
+
+{% block body %}
+	<link rel="stylesheet" href="{{ asset('/assets/sinan/productAssociate.css') }}">
+	<div class="container mt-5">
+		<div class="block-background">
+			<div class="title-associate">
+				<h1>Associer un utilisateur à un produit</h1>
+			</div>
+			{% for flash_message in app.session.flashbag.get('danger') %}
+				<div class="alert alert-danger auto-close">{{ flash_message }}</div>
+			{% endfor %}
+			{% for flash_message in app.session.flashbag.get('success') %}
+				<div class="alert alert-success auto-close">{{ flash_message }}</div>
+			{% endfor %}
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger auto-close">{{ message }}</div>
+			{% endfor %}
+			<div class="row justify-content-center">
+				<div class="col-sm-8">
+					{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+					{{ form_row(form._token) }}
+					<div class="form-group">
+						{{ form_row(form.user, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					<div class="title-associate">
+						<p>Sélectionner un produit</p>
+					</div>
+					<div class="container">
+						<div class="row">
+							<div>{{ form_errors(form) }}</div>
+							{% for productChoice in form.product.vars.choices %}
+								<div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+									{% set product = productChoice.data %}
+									<div class="card position-relative" style="height: 100%;">
+										<input type="radio" id="product_{{ product.id }}" name="{{ form.product.vars.full_name }}" value="{{ product.id }}" class="custom-control-input position-absolute" style="top: 0; left: 0; width: 20px; height: 20px; opacity: 1; z-index: 1;">
+										<label for="product_{{ product.id }}" class="card-body d-flex flex-column p-0">
+											<img src="{{ product.image }}" class="card-img-top p-0" alt="..." style="object-fit: cover; height: 80%; width: 100%;">
+											<p class="card-title flex-grow-1 text-center">{{ product.title }}</p>
+										</label>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="form-group mt-5 mb-5">
+						<div class="text-center">
+							<button type="submit" class="btn btn-dark">Associer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	 <script>
+		    document.addEventListener('DOMContentLoaded', function () {
+		        // Sélectionnez toutes les alertes flash avec la classe 'auto-close'
+		        var autoCloseAlerts = document.querySelectorAll('.auto-close');
+		
+		        // Fermez chaque alerte après 15 secondes
+		        autoCloseAlerts.forEach(function (alert) {
+		            setTimeout(function () {
+		                alert.style.display = 'none'; // Masquez l'alerte
+		            }, 10000); // 15 secondes en millisecondes
+		        });
+		    });
+		</script>
+{% endblock %}
