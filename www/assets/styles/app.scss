@@ -1,0 +1,12 @@
+@import "custom";
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: white;
+}
+
+
+.btn-hover:hover{
+    background-color: white;
+    color: black;
+}

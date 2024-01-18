@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+{% block body %}
+    <style>
+        .custom-file-input{
+            border: 2px #5FA8BF solid;
+            width: 60%
+        }
+        .content-form{
+            margin-top:4em;
+        }
+        .form-register{
+            margin-top: 2em;
+        }
+        .button-register{
+            width: 30%; 
+            background-color: #5FA8BF; 
+            border: 2px #5FA8BF;
+        }
+    </style>
+
+    <div class="content-form d-flex flex-column justify-content-center align-items-center text-center">
+        <h1 class="text-center">Insciption d'utilisateur</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, {'attr': {'class': 'form-register w-50'}}) }}
+            <div class="mb-4 col-12 d-flex flex-row">
+                {{ form_widget(registrationForm.firstname, {'attr': {'class': 'rounded-pill col-9 text-center blue custom-file-input', 'placeholder':'Prénom'}}) }}
+            </div>
+            <div class="mb-4 col-12  d-flex flex-row-reverse">
+                {{ form_widget(registrationForm.lastname, {'attr': {'class': 'rounded-pill col-9 text-center blue custom-file-input', 'placeholder':'Nom de famille'}}) }}
+            </div>
+            <div class="mb-4 col-12  d-flex flex-row">
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'rounded-pill col-9 text-center blue custom-file-input', 'placeholder':'Email'}}) }}
+            </div>
+            <div class="mb-4 col-12  d-flex flex-row-reverse">
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'rounded-pill col-9 text-center blue custom-file-input', 'placeholder':'Mot de passe'}},{
+                    label: 'Password',
+                    
+                }) }}
+            </div>
+            <div class="">
+                <button type="submit" class="py-3 text-center rounded-pill button-register">Inscrire</button>
+            </div>
+        {{ form_end(registrationForm) }}
+{% endblock %}
