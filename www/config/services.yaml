@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    shared_directory: '%kernel.project_dir%/%env(APP_SHARED_DIRECTORY)%'
+
 
 services:
     # default configuration for services in *this* file
@@ -21,4 +23,6 @@ services:
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Service\FileManager:
+        arguments:
+            $sharedDirectory: '%shared_directory%'
