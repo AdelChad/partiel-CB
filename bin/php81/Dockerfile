@@ -11,7 +11,6 @@ RUN apt-get -y update --fix-missing && \
     apt-get --no-install-recommends install -y apt-utils && \
     rm -rf /var/lib/apt/lists/*
 
-
 # Install useful tools and install important libaries
 RUN apt-get -y update && \
     apt-get -y --no-install-recommends install nano wget \
@@ -48,6 +47,11 @@ RUN pecl install redis-5.3.3 && \
 RUN apt-get update && \
     apt-get -y --no-install-recommends install --fix-missing libmagickwand-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# install node npm
+RUN apt-get update \
+    && apt-get install -y nodejs \
+    && apt-get install -y npm
 
 # Workarround until imagick is available in pecl with php8 support
 # Imagick Commit to install
