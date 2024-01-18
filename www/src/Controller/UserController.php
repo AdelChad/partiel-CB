@@ -45,6 +45,7 @@ class UserController extends AbstractController
         
         // traitement formulaire si envoyé et ok
         if ($form->isSubmitted()) {
+            
             $email = $form->get('email')->getData();
             $firstname = $form->get('firstname')->getData();
             $lastname = $form->get('lastname')->getData();
@@ -54,6 +55,7 @@ class UserController extends AbstractController
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
             $user->setPassword($passwordHasher->hashPassword($user, $password));
+            $user->setUpdatedAt(new \DateTimeImmutable('now'));
 
             $em->persist($user);
             $em->flush();
