@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chemical brothers{% endblock %}
+
+{% block body %}
+    <style>
+    
+        .button-hover{
+            width: 30%; 
+            background-color: #5FA8BF; 
+            border: 2px #5FA8BF;
+        }
+
+        .button-hover:hover{
+            color: black;
+            border: 2px black;
+        }
+
+        .custom-border-box{
+            border: 1px solid #5FA8BF;
+            height: 20%;
+            text-align: center;
+            border-radius: 1em;
+            font-size: 2em;
+        }
+
+        .custom-border-box span{
+            color:red
+        }
+    </style>
+
+
+    <div class="d-flex justify-content-around align-items-center mb-4" style="height: 50em; text-align: center; margin-top: 4em;">
+        <div class="container-form d-flex  flex-column h-50" style="width:30%">
+            <form class="h-100 d-flex flex-column justify-content-around align-items-center" action="{{ path('app_login') }}" method="post">
+                <input class="w-100 text-center py-3 rounded-pill" placeholder="Email" style="border: 2px #5FA8BF solid;" type="email" id="username" name="_username" value="{{ last_username }}" required>
+                <input class="w-100 text-center py-3 rounded-pill" placeholder="Password" style="border: 2px #5FA8BF solid;"  type="password" id="password" name="_password" required>
+
+                {# If you want to control the URL the user is redirected to on success
+                <input type="hidden" name="_target_path" value="/account"> #}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                
+                <button class="py-3 text-center rounded-pill button-hover"  type="submit">login</button>
+            </form>
+
+             {% if error %}
+                <div class="custom-border-box d-flex justify-content-center align-items-center"><span>{{ error.messageKey|trans(error.messageData, 'security') }}<span></div>
+            {% endif %}
+        </div>
+
+        <div class="chimical-brothers d-flex flex-column justify-content-center" style="width: 30%; background-color: #5FA8BF; height: 100%; border-radius: 3%; color: white;">
+            <div class="title">
+                <h1>
+                    Chemical brothers
+                </h1>
+            </div>
+            <div>
+                <text>
+                    La solution de ficheir en ligne pour vous faciliter dans votre company
+                </text>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
