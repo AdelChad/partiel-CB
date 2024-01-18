@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs associés à un produit
+{% endblock %}
+
+{% block body %}
+	<link rel="stylesheet" href="{{ asset('/assets/sinan/productAssociate.css') }}">
+	
+	<div class="title-associate">
+		<h1>Les utilisateurs associés à un produit</h1>
+	</div>
+	<div class="container">
+		{% for flash_message in app.session.flashbag.get('danger') %}
+			<div class="alert alert-danger auto-close">{{ flash_message }}</div>
+		{% endfor %}
+		{% for flash_message in app.session.flashbag.get('success') %}
+			<div class="alert alert-success auto-close">{{ flash_message }}</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger auto-close">{{ message }}</div>
+		{% endfor %}
+		{% if userProductsArray is not empty %}
+			<div class="table-responsive">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr class="center-title-table">
+							<th scope="col">Identifiant</th>
+							<th scope="col">Email</th>
+							<th scope="col">Prénom</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Produit associé à l'utilisateur</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for userProducts in userProductsArray %}
+							<tr>
+								<td class="align-middle">{{ userProducts.id }}</td>
+								<td class="align-middle">{{ userProducts.email }}</td>
+								<td class="align-middle">{{ userProducts.firstName }}</td>
+								<td class="align-middle">{{ userProducts.lastName }}</td>
+								<td>
+									<div class="row">
+										{% for product in userProducts.products %}
+											<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+												<div class="card-bought-product">
+													<img src="{{ product.image }}" class="card-img-top" alt="...">
+													<div class="card-content">
+														<div class="card-title">{{ product.title }}</div>
+														<p class="card-description">{{ product.description }}</p>
+													</div>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+			<p class="mt-4">Aucun utilisateur avec des produits associés.</p>
+		{% endif %}
+	</div>
+	 <script>
+	    document.addEventListener('DOMContentLoaded', function () {
+	        // Sélectionnez toutes les alertes flash avec la classe 'auto-close'
+	        var autoCloseAlerts = document.querySelectorAll('.auto-close');
+	
+	        // Fermez chaque alerte après 15 secondes
+	        autoCloseAlerts.forEach(function (alert) {
+	            setTimeout(function () {
+	                alert.style.display = 'none'; // Masquez l'alerte
+	            }, 10000); // 15 secondes en millisecondes
+	        });
+	    });
+	</script>
+{% endblock %}
