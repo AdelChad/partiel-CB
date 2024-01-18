@@ -32,7 +32,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         $errors = $form->getErrors(true, false);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $fileImg = $form->get('fileImg')->getData();
