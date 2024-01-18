@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous"
+    >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('css/styleApp.css') }}">
+    <script src="{{ asset('script/sript.js') }}"></script>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+<body>
+<header>
+    <nav class="p-1 navbar navbar-expand-lg bg-secondary bg-darkCustom text-light">
+        <div class="container-fluid d-flex col-5">
+            <div class="containerCustom col-2 text-light">
+                <a class="navbar-brand text-white fs-4" href="#">ChemicalBrothers</a>
+            </div>
+        </div>
+
+        <div class="containerCustom">
+            {# BUTTON BURGER #}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    id="burger" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        {# NAVIGATION ITEMS #}
+        <div class="collapse navbar-collapse my-3" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-12 justify-content-end px-3" id="nav-item-content">
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item text-grey-custom">
+                        <a class="nav-link text-grey-custom text-white"
+                           aria-current="page" href="#" title="Se deconnecter">
+                            <span class="d-none-responsive">Ajouter un article</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link text-grey-custom text-white"
+                       aria-current="page" href="#" title="Se deconnecter">
+                        <span class="d-none-responsive">Voir les articles</span>
+                    </a>
+                </li>
+
+                {% if app.user %}
+                    <li class="nav-item text-grey-custom">
+                        <a class="nav-link active text-grey-custom" aria-current="page" href="#" title="Accès aux FDS"
+                        ><span class="d-none-responsive text-white">Accès aux FDS</span></a>
+                    </li>
+                    <li class="nav-item text-grey-custom">
+                        <a class="btn bg-blue-custom text-white rounded-pill"
+                           aria-current="page"
+                           href="#"
+                           title="Deconnexion">
+                            <span class="d-none-responsive">Deconnexion</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item text-grey-custom">
+                        <a class="btn bg-blue-custom text-white rounded-pill"
+                           aria-current="page"
+                           href="#"
+                           title="connexion">
+                            <span class="d-none-responsive">Connexion</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main>
+    {#    MESSAGE FLASH #}
+    <section class="container d-flex justify-content-center mt-5">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success col-6" role="alert">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger col-6" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning col-6" role="alert">{{ message }}</div>
+        {% endfor %}
+    </section>
+    {% block body %}{% endblock %}
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>
