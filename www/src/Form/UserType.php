@@ -26,7 +26,6 @@ class UserType extends AbstractType
             ])
             ->add('firstname')
             ->add('lastname')
-            ->add('createdAt')
             ->add('send', SubmitType::class, [
                 'label' => $sendLabel
             ])

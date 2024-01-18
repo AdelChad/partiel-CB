@@ -74,16 +74,6 @@
                     }
                 }) }}
             </div>
-            <div class="mb-4 col-12 d-flex flex-row-reverse">
-                {{ form_widget(updateUserForm.createdAt, {
-                    'attr': {
-                        'class'            :'rounded-pill col-9 text-center blue custom-file-input',
-                        'id'               :'input-password',
-                        'aria-describedby' :'Mot de passe',
-                        'placeholder'      :'Mot de passe',
-                    }
-                }) }}
-            </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn blue-btn text-light text-center col-8">Valider</button>
