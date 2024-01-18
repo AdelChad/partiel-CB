@@ -32,14 +32,14 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         $errors = $form->getErrors(true, false);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $fileImg = $form->get('fileImg')->getData();
+
             if($fileImg != null){
                 $slugger = new AsciiSlugger();
                 $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, 'product');
+                $filePath = $fm->upload($fileImg, $slug, '', true);
 
                 $product->setImage($filePath);
             }
