@@ -39,7 +39,7 @@ class AdminController extends AbstractController
             if($fileImg != null){
                 $slugger = new AsciiSlugger();
                 $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, 'product');
+                $filePath = $fm->upload($fileImg, $slug, '', true);
 
                 $product->setImage($filePath);
             }

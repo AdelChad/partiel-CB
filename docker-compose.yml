@@ -4,7 +4,7 @@ services:
   # commentaire
   # DEMARRER AVEC LES DROITS DE USER, ID DE ROOT
   webserver:
-    user: "${UID-0}:${GID-0}"
+    user: "root"
     build:
       context: ./bin/${PHPVERSION}
     container_name: "${COMPOSE_PROJECT_NAME}-${PHPVERSION}"
