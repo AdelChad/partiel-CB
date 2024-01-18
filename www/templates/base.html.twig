@@ -4,14 +4,35 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+            {{ encore_entry_link_tags('app') }}
     </head>
     <body>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% include 'navbar.html.twig' %}
-        {% endif %}
+        <header>
+            {% include '_navbar.html.twig' %}
+        </header>
+
+        {#    MESSAGE FLASH #}
+        <section class="container d-flex justify-content-center mt-5">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success col-6" role="alert">{{ message }}</div>
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger col-6" role="alert">{{ message }}</div>
+            {% endfor %}
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning col-6" role="alert">{{ message }}</div>
+            {% endfor %}
+        </section>
+
         {% block body %}
         {% endblock %}
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+            {{ encore_entry_script_tags('app') }}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
+
+        <footer>
+            {% include '_footer.html.twig' %}
+        </footer>
     </body>
 </html>

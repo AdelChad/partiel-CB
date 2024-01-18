@@ -1,0 +1,27 @@
+.custom-file-input {
+    color: transparent;
+    text-align: center;
+}
+
+.custom-file-input::file-selector-button {
+    background: #fff;
+    border-radius: 50rem;
+    border: solid .20rem #fff;
+    color: gray;
+    width: 100%;
+    text-align: center;
+
+}
+.color-blue-custom{
+    color: #5FA8BF;
+}
+.bg-blue-custom{
+    background-color: #5FA8BF;
+}
+.border-blue-custom-raduis-1{
+    border: solid .18rem #5FA8BF;
+}
+.border-blue-custom-raduis-2{
+    border: solid .18rem #5FA8BF;
+    border-radius: 2rem;
+}
