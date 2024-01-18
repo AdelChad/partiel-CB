@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mettre à jour un utilisateur{% endblock %}
+
+{% block body %}
+<style lang="scss" scoped>
+    .content-form { 
+        margin-left:35vw; 
+        margin-top:3vw; 
+        background-color:white; 
+        width: 25vw; 
+        padding: 1em; 
+        border-radius:15px; 
+    }
+
+    .title{
+        margin-left:30vw; 
+        margin-top:3vw; 
+    }
+
+    .blue{
+        border: solid 3px #5FA8BF;
+    }
+
+    .blue-btn{
+        background-color: #5FA8BF;
+    }
+</style>
+
+<div class="">
+    {{ form_start(updateUserForm) }}
+    <div>
+    {{ form_errors(updateUserForm) }}
+    </div>
+        <h1 class="title">Mettre à jour un utilisateur</h1>
+        <div class="content-form">
+            <div class="mb-4 col-12 d-flex flex-row">
+                {{ form_widget(updateUserForm.email, {
+                        'attr': {
+                            'class'            :'rounded-pill col-9 text-center blue custom-file-input',
+                            'id'               :'input-email',
+                            'aria-describedby' :'E-mail',
+                            'placeholder'      :'E-mail',
+                        }
+                }) }}
+            </div>
+            <div class="mb-4 col-12 d-flex flex-row-reverse">
+                {{ form_widget(updateUserForm.firstname, {
+                    'attr': {
+                        'class'            :'rounded-pill col-9 text-center blue custom-file-input',
+                        'id'               :'input-firstname',
+                        'aria-describedby' :'Prenom',
+                        'placeholder'      :'Prenom',
+                    }
+                }) }}
+            </div>
+            <div class="mb-4 col-12 d-flex flex-row">
+                {{ form_widget(updateUserForm.lastname, {
+                    'attr': {
+                        'class'            :'rounded-pill col-9 text-center blue custom-file-input',
+                        'id'               :'input-lastname',
+                        'aria-describedby' :'Nom',
+                        'placeholder'      :'Nom',
+                    }
+                }) }}
+            </div>
+            <div class="mb-4 col-12 d-flex flex-row-reverse">
+                {{ form_widget(updateUserForm.password, {
+                    'attr': {
+                        'class'            :'rounded-pill col-9 text-center blue custom-file-input',
+                        'id'               :'input-password',
+                        'aria-describedby' :'Mot de passe',
+                        'placeholder'      :'Mot de passe',
+                    }
+                }) }}
+            </div>
+            <div class="mb-4 col-12 d-flex flex-row-reverse">
+                {{ form_widget(updateUserForm.createdAt, {
+                    'attr': {
+                        'class'            :'rounded-pill col-9 text-center blue custom-file-input',
+                        'id'               :'input-password',
+                        'aria-describedby' :'Mot de passe',
+                        'placeholder'      :'Mot de passe',
+                    }
+                }) }}
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn blue-btn text-light text-center col-8">Valider</button>
+            </div>
+        </div>
+    {{ form_end(updateUserForm, {render_rest: false}) }}
+</div>
+{% endblock %}

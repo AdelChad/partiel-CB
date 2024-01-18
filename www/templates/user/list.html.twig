@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List utilisateurs{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Liste des utilisateurs</h1>
+
+    <div style="background-color: #5FA8BF; padding: 1em; border-radius: 15px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prenom</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in userList %}
+                    <tr>
+                        <td scope="row">{{ user.id }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <a href="{{ path('app_user_view', {'id' : user.id}) }}" class="btn btn-light">Voir</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('app_user_update', {'id' : user.id}) }}" class="btn btn-light">Mettre à jour</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
