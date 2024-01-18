@@ -1,0 +1,64 @@
+<nav class="p-1 navbar navbar-expand-lg bg-secondary bg-darkCustom text-light">
+    <div class="container-fluid d-flex col-5">
+        <div class="containerCustom col-2 text-light">
+            <a class="navbar-brand text-white fs-4" href="#">ChemicalBrothers</a>
+        </div>
+    </div>
+
+    <div class="containerCustom">
+        {# BUTTON BURGER #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                id="burger" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    {# NAVIGATION ITEMS #}
+    <div class="collapse navbar-collapse my-3" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-12 justify-content-end px-3" id="nav-item-content">
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link text-grey-custom text-white"
+                       aria-current="page" href="#" title="Se deconnecter">
+                        <span class="d-none-responsive">Ajouter un article</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="nav-item text-grey-custom">
+                <a class="nav-link text-grey-custom text-white"
+                   aria-current="page" href="#" title="Se deconnecter">
+                    <span class="d-none-responsive">Voir les articles</span>
+                </a>
+            </li>
+
+            {% if app.user %}
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link active text-grey-custom" aria-current="page" href="#" title="Accès aux FDS"
+                    ><span class="d-none-responsive text-white">Accès aux FDS</span></a>
+                </li>
+                <li class="nav-item text-grey-custom">
+                    <a class="btn bg-blue-custom text-white rounded-pill"
+                       aria-current="page"
+                       href="#"
+                       title="Deconnexion">
+                        <span class="d-none-responsive">Deconnexion</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item text-grey-custom">
+                    <a class="btn bg-blue-custom text-white rounded-pill"
+                       aria-current="page"
+                       href="#"
+                       title="connexion">
+                        <span class="d-none-responsive">Connexion</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>

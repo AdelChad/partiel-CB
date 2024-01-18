@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creation d'un produit{% endblock %}
+
+{% block body %}
+    <section class="container d-flex align-items-center justify-content-center flex-wrap"
+             style="min-height: 80vh;"
+             id="section-register">
+        {# Formulaire #}
+        <div class="col-sm-12 col-md-12 col-lg-6 d-flex align-items-center justify-content-center">
+
+            {{ form_start(form, {'attr' : {
+                'class' : 'col-8',
+                'id' : 'form-edit-create-product'
+            }}) }}
+            <div class="mb-4 col-12">
+                <h3 class="text-secondary text-center fs-2">
+                    {{ app.request.attributes.get('_route') == 'app_admin_product_add' ?
+                    'Ajouter un produit' : 'Modifier le produit n°' ~ product.id
+                    }}
+                </h3>
+            </div>
+            <div class="mb-4 col-12">
+                {{ form_widget(form.title, {
+                    'attr': {
+                        'class':            ' rounded-pill py-3 col-9 text-center border-blue-custom-raduis-1',
+                        'id':               'input-title',
+                        'aria-describedby': 'Nom du produit',
+                        'placeholder':      'Nom du produit',
+                        'row':               '1'
+                    }
+                }) }}
+            </div>
+
+            <div class="mb-4 col-12">
+                {{ form_widget(form.description, {
+                    'attr': {
+                        'class':            'py-3 col-12 text-center border-blue-custom-raduis-2',
+                        'id':               'input-description',
+                        'aria-describedby': 'Description',
+                        'placeholder':      'Description'
+                    }
+                }) }}
+            </div>
+
+            <div class="mb-4 col-12">
+                {{ form_widget(form.fileImg, {
+                    'attr': {
+                        'class'            :'rounded-pill col-4 col-sm-6 col-lg-4 text-center border-blue-custom-raduis-1 custom-file-input',
+                        'aria-describedby' :'Fichier',
+                        'placeholder'      :'Fichier',
+                        'onchange'         :'getNameFile()'
+                    }
+                }) }}
+                <span id="input-file-name">{{ product is defined ? product.image : '' }}</span>
+                <span id="input-file-close" class="{{ product is not defined ? 'd-none' : '' }}" onclick="closeFile()">
+                    <i class="bi bi-x-circle-fill color-blue-custom"></i>
+                </span>
+            </div>
+            <div class="mb-4 col-12">
+                {{ form_widget(form.price, {
+                    'attr': {
+                        'class':            'rounded-pill col-4 text-center border-blue-custom-raduis-1 col-sm-6 col-lg-4',
+                        'id':               'input-price',
+                        'aria-describedby': 'Prix',
+                        'placeholder':      'Prix'
+                    }
+                }) }}
+            </div>
+
+            <div class="btn-sumbit-form d-flex justify-content-center">
+                <button type="submit" class="py-2 border-blue-custom-raduis-1 bg-blue-custom rounded-pill text-center text-white col-7">Valider</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}
