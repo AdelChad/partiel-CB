@@ -21,6 +21,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@floating-ui/dom": "^1.5.4",
+        "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.2",
         "jquery": "^3.7.1"
     }
