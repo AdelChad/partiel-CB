@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Entity\User;
 use App\Form\UserProductType;
-use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

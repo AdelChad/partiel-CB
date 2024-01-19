@@ -13,3 +13,24 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 
 // start the Stimulus application
 import './bootstrap';
+
+import $ from 'jquery';
+
+$(document).ready(function(){
+    $(".vue").click(function(e){
+        e.preventDefault();
+        var notifId = $(this).data('id');
+        console.log(notifId);
+        $.ajax({
+            url: '/notification/'+ notifId +'/vue',
+            type: 'POST',
+            success: function(result){
+                $('#notification-' + notifId).remove();
+
+                var unreadCount = $('#unread-count').text();
+                unreadCount = parseInt(unreadCount) - 1;
+                $('#unread-count').text(unreadCount);
+            }
+        });
+    });
+});

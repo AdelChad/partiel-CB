@@ -22,7 +22,7 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('password', PasswordType::class, [
-                'empty_data' => '', // Définit également la valeur par défaut ici
+                'empty_data' => '',
             ])
             ->add('firstname')
             ->add('lastname')

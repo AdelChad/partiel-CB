@@ -9,18 +9,28 @@
 </style>
 
 <div class="example-wrapper">
+<div class="notifications">
+    {% for notifications in notificationList %}
+        <div id="notification-{{ notifications.id }}">
+            <span>{{ notifications.message }}</span> 
+            <button class="vue" data-id={{ notifications.id }} >Vue</button><br>
+        </div>
+    {% endfor %}
+</div>
     <h1>Liste des produits</h1>
-
         <div class="d-flex flex-wrap" style="background-color: #E2E2E2; width: 66vw; padding: 2em; border-radius: 20px;">
         {% for product in prodList %}
             <div class="card" style="width: 18rem; background-color: #5FA8BF; margin-right: 10px; margin-bottom: 10px;">
+                <img src="/upload/{{ product.image }}" alt="Card image cap" style="border-radius:5px;">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }}</h5>
                     <h5 class="card-title">{{ product.price }} €</h5>
                     <p class="card-text">{{ product.description }}</p>
                     <p class="card-text">Disponible depuis le: {{ product.createdAt|date('d/m/Y') }}</p>
-                    {# <a href="{{ path('app_product_view', {'id' : product.id}) }}" class="btn btn-light">Voir le produit</a>
-                    <a href="{{ path('app_product_update', {'id' : product.id}) }}" class="btn btn-light">Mettre à jour le produit</a> #}
+                    <a href="{{ path('app_admin_fds_download',  {'id' : product.fds.id}) }}" class="btn btn-light m-1">Télécharger la fiche produit</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_produit_upload', {'id' : product.id}) }}" class="btn btn-light m-1">Mettre à jour le produit</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -28,3 +38,5 @@
     {# <a class="btn btn-light" href="{{ path('app_product_create') }}">Crée un produit</a> #}
 </div>
 {% endblock %}
+
+{% block javascripts %}<script src="{{ asset('assets/app.js') }}"></script>{% endblock %}

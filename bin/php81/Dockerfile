@@ -48,10 +48,23 @@ RUN apt-get update && \
     apt-get -y --no-install-recommends install --fix-missing libmagickwand-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# install node npm
+# install node 
 RUN apt-get update \
-    && apt-get install -y nodejs \
-    && apt-get install -y npm
+    && apt-get install -y curl \
+    && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs
+
+RUN apt-get install -f
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+#install npm
+RUN apt-get install -y npm
+
+# Mettre à jour npm
+RUN npm install -g npm@latest
+
+# Installation de Sass
+RUN npm install -g sass --save-dev
 
 # Workarround until imagick is available in pecl with php8 support
 # Imagick Commit to install
