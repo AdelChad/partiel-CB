@@ -43,7 +43,9 @@
 										{% for product in userProducts.products %}
 											<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 												<div class="card-bought-product">
-													<img src="{{ product.image }}" class="card-img-top" alt="...">
+													<div class="img">
+														<img src="{{ asset('upload/'~ product.image) }}" class="card-img-top" alt="...">
+													</div>
 													<div class="card-content">
 														<div class="card-title">{{ product.title }}</div>
 														<p class="card-description">{{ product.description }}</p>
