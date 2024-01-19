@@ -13,9 +13,7 @@ class HomeController extends AbstractController
     {
         if($this->isGranted('IS_AUTHENTICATED_FULLY')){
             $user = $this->getUser();
-            return $this->render('home/home.html.twig', [
-                'user' => $user
-            ]);
+            return $this->redirectToRoute('app_bought_product');
         }
         return $this->redirectToRoute('app_login');
     }

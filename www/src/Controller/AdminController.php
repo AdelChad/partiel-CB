@@ -104,7 +104,7 @@ class AdminController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Le fds a été ajouté avec succès !');
-                return $this->redirectToRoute('app_admin_home');
+                return $this->redirectToRoute('app_produit_list');
             }
             return $this->render('admin/fds/create-edit.html.twig', [
                 'form' => $form->createView(),
@@ -118,7 +118,7 @@ class AdminController extends AbstractController
     #[Route('/fds/download/{id}', name: 'fds_download')]
     public function downloadFds($id, FileManager $fm, FdsRepository $fdsRepository): Response
     {  
-        if($this->isGranted('ROLE_ADMIN')){
+        if($this->isGranted(['ROLE_ADMIN','ROLE_USER'])){
             $fds = $fdsRepository->findOneBy(['id'=>$id]);
             return $fm->download($fds->getPath());
         }

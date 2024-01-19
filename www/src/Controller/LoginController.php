@@ -14,7 +14,7 @@ class LoginController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if($this->isGranted('IS_AUTHENTICATED_FULLY')){
-            return $this->redirectToRoute('app_produit_list');
+            return $this->redirectToRoute('app_bought_product');
         }
          // get the login error if there is one
          $error = $authenticationUtils->getLastAuthenticationError();

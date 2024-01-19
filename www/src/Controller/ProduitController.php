@@ -99,7 +99,7 @@ class ProduitController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Produit modifié avec succès !');
-                return $this->redirectToRoute('app_admin_home');
+                return $this->redirectToRoute('app_produit_list');
             }
 
             return $this->render('product/create-edit.html.twig', [
