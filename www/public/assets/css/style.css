@@ -3,8 +3,8 @@ a{
 }
 
 .custom-file-input {
-    color: transparent;
     text-align: center;
+    color:black;
 }
 .custom-file-input::file-selector-button {
     background: #fff;

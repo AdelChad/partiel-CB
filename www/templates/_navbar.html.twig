@@ -22,7 +22,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item text-grey-custom">
                     <a class="nav-link text-grey-custom text-white"
-                       aria-current="page" href="#" title="Se deconnecter">
+                       aria-current="page" href="{{ path('app_produit_create') }}" title="Se deconnecter">
                         <span class="d-none-responsive">Ajouter un article</span>
                     </a>
                 </li>
@@ -30,31 +30,19 @@
 
             <li class="nav-item text-grey-custom">
                 <a class="nav-link text-grey-custom text-white"
-                   aria-current="page" href="#" title="Se deconnecter">
+                   aria-current="page" href="{{ path('app_produit_list') }}" title="Se deconnecter">
                     <span class="d-none-responsive">Voir les articles</span>
                 </a>
             </li>
 
             {% if app.user %}
-                <li class="nav-item text-grey-custom">
-                    <a class="nav-link active text-grey-custom" aria-current="page" href="#" title="Accès aux FDS"
-                    ><span class="d-none-responsive text-white">Accès aux FDS</span></a>
-                </li>
+
                 <li class="nav-item text-grey-custom">
                     <a class="btn bg-blue-custom text-white rounded-pill"
                        aria-current="page"
-                       href="#"
+                       href="{{ path('app_logout') }}"
                        title="Deconnexion">
                         <span class="d-none-responsive">Deconnexion</span>
-                    </a>
-                </li>
-            {% else %}
-                <li class="nav-item text-grey-custom">
-                    <a class="py-2 rounded-pill border-blue-custom-raduis-1 bg-blue-custom text-white"
-                       aria-current="page"
-                       href="#"
-                       title="connexion">
-                        <span class="d-none-responsive">Connexion</span>
                     </a>
                 </li>
             {% endif %}

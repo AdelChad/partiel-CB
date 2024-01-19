@@ -3,6 +3,7 @@
 {% block title %}Creation d'un produit{% endblock %}
 
 {% block body %}
+    <h1 style="margin-left: 5em;">Crée un produit</h1>
     <section class="container d-flex align-items-center justify-content-center flex-wrap"
              style="min-height: 80vh;"
              id="section-register">
@@ -14,11 +15,6 @@
                 'id' : 'form-edit-create-product'
             }}) }}
             <div class="mb-4 col-12">
-                <h3 class="text-secondary text-center fs-2">
-                    {{ app.request.attributes.get('_route') == 'app_admin_product_add' ?
-                    'Ajouter un produit' : 'Modifier le produit n°' ~ product.id
-                    }}
-                </h3>
             </div>
             <div class="mb-4 col-12">
                 {{ form_widget(form.title, {

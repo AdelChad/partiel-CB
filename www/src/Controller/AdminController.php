@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Fds;
-use App\Entity\Product;
 use App\Form\FdsType;
-use App\Form\ProductType;
+use App\Repository\FdsRepository;
 use App\Service\FileManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,76 +22,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/product/create', name: 'product_add')]
-    public function createProduct(Request $request, FileManager $fm,  EntityManagerInterface $entityManager): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-
-        $form->handleRequest($request);
-
-        $errors = $form->getErrors(true, false);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $fileImg = $form->get('fileImg')->getData();
-
-            if($fileImg != null){
-                $slugger = new AsciiSlugger();
-                $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, '', true);
-
-                $product->setImage($filePath);
-            }
-            $product->setCreatedAt(new \DateTimeImmutable());
-
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit ajouté avec succès !');
-            return $this->redirectToRoute('app_admin_home');
-        }
-        return $this->render('admin/product/create-edit.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors
-        ]);
-    }
-
-    #[Route('/product/edit/{id}', name: 'product_edit')]
-    public function editProduct(Request $request, FileManager $fm,  EntityManagerInterface $entityManager, Product $product): Response
-    {
-        $form = $this->createForm(ProductType::class, $product);
-
-        $form->handleRequest($request);
-
-        $errors = $form->getErrors(true, false);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $fileImg = $form->get('fileImg')->getData();
-
-            if($fileImg != null){
-                $slugger = new AsciiSlugger();
-                $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, '', true);
-
-                $product->setImage($filePath);
-            }
-            $product->setCreatedAt(new \DateTimeImmutable());
-
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit modifié avec succès !');
-            return $this->redirectToRoute('app_admin_home');
-        }
-        return $this->render('admin/product/create-edit.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors,
-            'product' => $product
-        ]);
-    }
-
-
     #[Route('/fds/create', name: 'fds_add')]
     public function createFds(Request $request, FileManager $fm,  EntityManagerInterface $entityManager): Response
     {
@@ -109,7 +38,7 @@ class AdminController extends AbstractController
             if($fileImg != null){
                 $slugger = new AsciiSlugger();
                 $slug = $slugger->slug($fds->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, '', true);
+                $filePath = $fm->upload($fileImg, $slug, '', false);
 
                 $fds->setPath($filePath);
             }
@@ -119,7 +48,7 @@ class AdminController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Le fds a été ajouté avec succès !');
-            return $this->redirectToRoute('app_admin_home');
+            return $this->redirectToRoute('app_product_associate_create');
         }
         return $this->render('admin/fds/create-edit.html.twig', [
             'form' => $form->createView(),
@@ -158,5 +87,12 @@ class AdminController extends AbstractController
             'errors' => $errors,
             'fds'   => $fds
         ]);
+    }
+
+    #[Route('/fds/download/{id}', name: 'fds_download')]
+    public function downloadFds($id, FileManager $fm, FdsRepository $fdsRepository): Response
+    {
+       $fds = $fdsRepository->findOneBy(['id'=>$id]);
+       return $fm->download($fds->getPath());
     }
 }
