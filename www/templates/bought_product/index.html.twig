@@ -17,7 +17,7 @@
 								<p class="card-description">{{ product.description }}</p>
 								<div class="card-price">{{ product.price }}€</div>
 								<div class="row justify-content-center">
-									<a href="/assets/pdf/test1.pdf" class="btn btn-dark" download="notice-produit.pdf">Télécharger la notice</a>
+									<a href="{{ product.fdsPath }}" class="btn btn-dark" download="notice-produit.pdf">Télécharger la notice</a>
 								</div>
 							</div>
 						</div>
