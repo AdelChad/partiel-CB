@@ -28,3 +28,21 @@ a{
     border: solid .18rem #5FA8BF;
     border-radius: 2rem;
 }
+.side-bar{
+    height: 51em;
+    background-color: #3E5257;
+}
+
+.content-admin{
+    width: 85%;
+    height: 50em;
+    position: fixed;
+    left: 13%;
+    top: 10.2%;
+}
+
+.list-menu{
+    height: 50%;
+    display: flex;
+    justify-content: space-around;
+}
