@@ -1,8 +1,8 @@
-{% extends 'admin/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Creation d'un produit{% endblock %}
 
-{% block content %}
+{% block body %}
      <h3 class="text-center fs-2 col-5">
         {{ app.request.attributes.get('_route') == 'app_produit_create' ?
         'Ajouter un produit' : 'Modifier le produit n°' ~ product.id }}

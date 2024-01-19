@@ -20,83 +20,95 @@ class ProduitController extends AbstractController
     #[Route('', name: 'list')]
     public function index(NotificationRepository $notificationRepository, ProductRepository $prodRepo): Response
     {
-        $prodList = $prodRepo->findAll();
-        $user = $this->getUser();
-        $notifications = $notificationRepository->findBy(['user' => $user, 'isRead' => false]);
-        return $this->render('product/list.html.twig', [
-            'prodList' => $prodList,
-            'notificationList' => $notifications,
-        ]);
+
+        if($this->isGranted('ROLE_ADMIN')){
+            $prodList = $prodRepo->findAll();
+            $user = $this->getUser();
+            $notifications = $notificationRepository->findBy(['user' => $user, 'isRead' => false]);
+            return $this->render('product/list.html.twig', [
+                'prodList' => $prodList,
+                'notificationList' => $notifications,
+            ]);
+        }
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/create', name: 'create')]
     public function createProduct(Request $request, FileManager $fm,  EntityManagerInterface $entityManager): Response
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
 
-        $form->handleRequest($request);
+        if($this->isGranted('ROLE_ADMIN')){
+            $product = new Product();
+            $form = $this->createForm(ProductType::class, $product);
 
-        $errors = $form->getErrors(true, false);
-        if ($form->isSubmitted() && $form->isValid()) {
+            $form->handleRequest($request);
 
-            $fileImg = $form->get('fileImg')->getData();
+            $errors = $form->getErrors(true, false);
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            if($fileImg != null){
-                $slugger = new AsciiSlugger();
-                $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, '', true);
+                $fileImg = $form->get('fileImg')->getData();
 
-                $product->setImage($filePath);
+                if($fileImg != null){
+                    $slugger = new AsciiSlugger();
+                    $slug = $slugger->slug($product->getTitle());
+                    $filePath = $fm->upload($fileImg, $slug, '', true);
+
+                    $product->setImage($filePath);
+                }
+                $product->setCreatedAt(new \DateTimeImmutable());
+
+                $entityManager->persist($product);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Produit ajouté avec succès !');
+                return $this->redirectToRoute('app_admin_fds_add');
             }
-            $product->setCreatedAt(new \DateTimeImmutable());
-
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit ajouté avec succès !');
-            return $this->redirectToRoute('app_admin_fds_add');
+            return $this->render('product/create-edit.html.twig', [
+                'form' => $form->createView(),
+                'errors' => $errors
+            ]);
         }
-        return $this->render('product/create-edit.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors
-        ]);
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/edit/{id}', name: 'upload')]
     public function editProduct(Request $request, FileManager $fm,  EntityManagerInterface $entityManager, Product $product): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
 
-        $form->handleRequest($request);
+        if($this->isGranted('ROLE_ADMIN')){
+            $form = $this->createForm(ProductType::class, $product);
 
-        $errors = $form->getErrors(true, false);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $form->getErrors(true, false);
 
-            $fileImg = $form->get('fileImg')->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            if($fileImg != null){
-                $slugger = new AsciiSlugger();
-                $slug = $slugger->slug($product->getTitle());
-                $filePath = $fm->upload($fileImg, $slug, '', true);
+                $fileImg = $form->get('fileImg')->getData();
 
-                $product->setImage($filePath);
+                if($fileImg != null){
+                    $slugger = new AsciiSlugger();
+                    $slug = $slugger->slug($product->getTitle());
+                    $filePath = $fm->upload($fileImg, $slug, '', true);
+
+                    $product->setImage($filePath);
+                }
+                $product->setCreatedAt(new \DateTimeImmutable());
+
+                $entityManager->persist($product);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Produit modifié avec succès !');
+                return $this->redirectToRoute('app_admin_home');
             }
-            $product->setCreatedAt(new \DateTimeImmutable());
 
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Produit modifié avec succès !');
-            return $this->redirectToRoute('app_admin_home');
+            return $this->render('product/create-edit.html.twig', [
+                'form' => $form->createView(),
+                'errors' => $errors,
+                'product' => $product
+            ]);
         }
-
-        return $this->render('product/create-edit.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors,
-            'product' => $product
-        ]);
+        return $this->redirectToRoute('app_home');
     }
 
     

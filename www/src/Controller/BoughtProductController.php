@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,8 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class BoughtProductController extends AbstractController
 {
     #[Route('/achat/produit', name: 'app_bought_product')]
-    public function index(UserRepository $userRepository, ): Response
+    public function index(UserRepository $userRepository, NotificationRepository $notificationRepository ): Response
     {
+        $user = $this->getUser();
+        $notifications = $notificationRepository->findBy(['user' => $user, 'isRead' => false]);
+
+
         if($this->getUser() == null){
             return $this->redirectToRoute('app_login');
         }
@@ -46,7 +51,8 @@ class BoughtProductController extends AbstractController
 
         return $this->render('bought_product/index.html.twig', [
             'controller_name' => 'BoughtProductController',
-            'BoughtProducts' => $BoughtProductsWithFdsPath
+            'BoughtProducts' => $BoughtProductsWithFdsPath,
+            'notificationList' => $notifications
         ]);
     }
 }

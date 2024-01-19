@@ -1,8 +1,8 @@
-{% extends 'admin/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Mettre à jour un utilisateur{% endblock %}
 
-{% block content %}
+{% block body %}
 <style lang="scss" scoped>
     .content-form { 
         margin-left:35vw; 
@@ -76,7 +76,7 @@
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn blue-btn text-light text-center col-8">Valider</button>
+                <button type="submit" class="py-2 border-blue-custom bg-blue-custom rounded-pill text-center text-white col-7">Valider</button>
             </div>
         </div>
     {{ form_end(updateUserForm, {render_rest: false}) }}

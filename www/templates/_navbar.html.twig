@@ -22,30 +22,45 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item text-grey-custom">
                     <a class="nav-link text-grey-custom text-white"
-                       aria-current="page" href="{{ path('app_produit_create') }}" title="Se deconnecter">
+                       aria-current="page" href="{{ path('app_produit_create') }}" title="Ajouter un article">
                         <span class="d-none-responsive">Ajouter un article</span>
+                    </a>
+                </li>
+
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link text-grey-custom text-white"
+                    aria-current="page" href="{{ path('app_produit_list') }}" title="Voir la liste des articles">
+                        <span class="d-none-responsive">Voir la liste des articles</span>
+                    </a>
+                </li>
+
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link text-grey-custom text-white"
+                    aria-current="page" href="{{ path('app_user_list') }}" title="voir les utilisateurs">
+                        <span class="d-none-responsive">Voir la liste des utilisateurs</span>
+                    </a>
+                </li>
+
+            {% endif %}
+
+
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item text-grey-custom">
+                    <a class="nav-link text-grey-custom text-white"
+                    aria-current="page" href="{{ path('app_bought_product') }}" title="Se deconnecter">
+                        <span class="d-none-responsive">Voir vos Articles</span>
                     </a>
                 </li>
             {% endif %}
 
             <li class="nav-item text-grey-custom">
-                <a class="nav-link text-grey-custom text-white"
-                   aria-current="page" href="{{ path('app_produit_list') }}" title="Se deconnecter">
-                    <span class="d-none-responsive">Voir les articles</span>
-                </a>
-            </li>
-
-            {% if app.user %}
-
-                <li class="nav-item text-grey-custom">
                     <a class="btn bg-blue-custom text-white rounded-pill"
                        aria-current="page"
                        href="{{ path('app_logout') }}"
                        title="Deconnexion">
                         <span class="d-none-responsive">Deconnexion</span>
                     </a>
-                </li>
-            {% endif %}
+            </li>
         </ul>
 
     </div>

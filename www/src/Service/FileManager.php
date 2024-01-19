@@ -50,7 +50,7 @@ class FileManager
     public function download(string $name, string $subdir = ''): BinaryFileResponse
     {
         $dirPath = $this->sharedDirectory.'/private/'.$subdir;
-
+        
         if (!file_exists($dirPath.'/'.$name)) {
             return new BinaryFileResponse('', 404);
         }

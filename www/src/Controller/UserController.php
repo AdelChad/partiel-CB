@@ -17,54 +17,64 @@ class UserController extends AbstractController
 {
     #[Route('', name: 'list')]
     public function index(UserRepository $userRepo): Response
-    {
-        $userList = $userRepo->findAll();
+    {   
+        if($this->isGranted('ROLE_ADMIN')){
+            $userList = $userRepo->findAll();
 
-        return $this->render('user/list.html.twig', [
-            'userList' => $userList,
-        ]);
+            return $this->render('user/list.html.twig', [
+                'userList' => $userList,
+            ]);
+        }
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/{id}', name: 'view')]
     public function view($id, EntityManagerInterface $entityManager): Response
     {
-        $user = $entityManager->getRepository(User::class)->find(intval($id));
+        if($this->isGranted('ROLE_ADMIN')){
+            $user = $entityManager->getRepository(User::class)->find(intval($id));
 
-        return $this->render('user/view.html.twig', ['user' => $user]);
+            return $this->render('user/view.html.twig', ['user' => $user]);
+        }
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/update/{id}', name: 'update')]
     public function update(User $user, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, Request $request): Response
     {
-        $form = $this->createForm(UserType::class, $user, [
-            'update' => true,
-        ]);
-        
-        $form->handleRequest($request);
-        $errors = $form->getErrors(true, false);
-        
-        // traitement formulaire si envoyé et ok
-        if ($form->isSubmitted()) {
+
+        if($this->isGranted('ROLE_ADMIN')){
+            $form = $this->createForm(UserType::class, $user, [
+                'update' => true,
+            ]);
             
-            $email = $form->get('email')->getData();
-            $firstname = $form->get('firstname')->getData();
-            $lastname = $form->get('lastname')->getData();
-            $password = $form->get('password')->getData();
-
-            $user->setEmail($email);
-            $user->setFirstname($firstname);
-            $user->setLastname($lastname);
-            $user->setPassword($passwordHasher->hashPassword($user, $password));
-            $user->setUpdatedAt(new \DateTimeImmutable('now'));
-
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('app_user_list');
+            $form->handleRequest($request);
+            $errors = $form->getErrors(true, false);
+            
+            // traitement formulaire si envoyé et ok
+            if ($form->isSubmitted()) {
+                
+                $email = $form->get('email')->getData();
+                $firstname = $form->get('firstname')->getData();
+                $lastname = $form->get('lastname')->getData();
+                $password = $form->get('password')->getData();
+    
+                $user->setEmail($email);
+                $user->setFirstname($firstname);
+                $user->setLastname($lastname);
+                $user->setPassword($passwordHasher->hashPassword($user, $password));
+                $user->setUpdatedAt(new \DateTimeImmutable('now'));
+    
+                $em->persist($user);
+                $em->flush();
+    
+                return $this->redirectToRoute('app_user_list');
+            }
+    
+            return $this->render('user/update.html.twig', [
+                'updateUserForm' => $form->createView()
+            ]);
         }
-
-        return $this->render('user/update.html.twig', [
-            'updateUserForm' => $form->createView()
-        ]);
+        return $this->redirectToRoute('app_home');
     }
 }

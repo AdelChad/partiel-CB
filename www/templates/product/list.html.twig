@@ -1,8 +1,8 @@
-{% extends 'admin/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste produits{% endblock %}
 
-{% block content %}
+{% block body %}
 <style>
     .example-wrapper { margin-left: 13em; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -11,35 +11,26 @@
 <div class="example-wrapper">
     <h1>Liste des produits</h1>
 
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Notifications
-        </a>
-
-        <div class="notifications dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {% for notifications in notificationList %}
-            <div id="notification-{{ notifications.id }}" class="test">
-                    <span class="dropdown-item">{{ notifications.message }}
-                    <button class="vue btn btn-light" data-id={{ notifications.id }}>Vue</button></span>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
     <div class="d-flex flex-wrap" style="background-color: #E2E2E2; width: 66vw; padding: 2em; border-radius: 20px;">
     {% for product in prodList %}
-        <div class="card" style="width: 18rem; background-color: #5FA8BF; margin-right: 10px; margin-bottom: 10px;">
-            <img src="/upload/{{ product.image }}" alt="Card image cap" style="border-radius:5px;">
-            <div class="card-body">
-                <h5 class="card-title">{{ product.title }}</h5>
-                <h5 class="card-title">{{ product.price }} €</h5>
-                <p class="card-text">{{ product.description }}</p>
-                <p class="card-text">Disponible depuis le: {{ product.createdAt|date('d/m/Y') }}</p>
-                <a href="{{ path('app_admin_fds_download',  {'id' : product.fds.id}) }}" class="btn btn-light m-1">Télécharger la fiche produit</a>
-                {% if is_granted('ROLE_ADMIN') %}
+            <div class="card" style="width: 18rem; background-color: #5FA8BF; margin-right: 10px; margin-bottom: 10px;">
+                <img src="/upload/{{ product.image }}" alt="Card image cap" style="border-radius:5px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <h5 class="card-title">{{ product.price }} €</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">Disponible depuis le: {{ product.createdAt|date('d/m/Y') }}</p>
+                    {% if product.fds.id is defined %}
+                        <a href="{{ path('app_admin_fds_download',  {'id' : product.fds.id}) }}" class="btn btn-light m-1">Télécharger la fiche produit</a>
+                        <a href="{{ path('app_admin_fds_edit', {'id' : product.fds.id}) }}" class="btn btn-light m-1">Mettre à jour le fds</a>
+                    {% else %}
+                        <a href="{{ path('app_admin_fds_create') }}" class="btn btn-light m-1">Ajouter un FDS</a>
+                    {% endif %}
                     <a href="{{ path('app_produit_upload', {'id' : product.id}) }}" class="btn btn-light m-1">Mettre à jour le produit</a>
-                {% endif %}
+                </div>
             </div>
-        </div>
+        {% else %}
+
     {% endfor %}
     </div>
     {# <a class="btn btn-light" href="{{ path('app_product_create') }}">Crée un produit</a> #}
