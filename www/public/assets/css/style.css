@@ -4,6 +4,9 @@ a{
 li{
     text-decoration:none;
 }
+.color-red{
+    color: red;
+}
 ul{
     list-style-type:none;
 }
@@ -36,9 +39,7 @@ ul{
 .border-raduis-1{
     border-radius: 2rem;
 }
-.color-red{
-    color: red;
-}
+
 .form-error li {
     color: red;
     font-size: .9rem;
@@ -64,7 +65,6 @@ ul{
 .custom-border-box span{
     color:red
 }
-
 .custom-file-input{
     border: 2px #5FA8BF solid;
     width: 60%
@@ -79,4 +79,22 @@ ul{
     width: 30%;
     background-color: #5FA8BF;
     border: 2px #5FA8BF;
+}
+.side-bar{
+    height: 51em;
+    background-color: #3E5257;
+}
+
+.content-admin{
+    width: 85%;
+    height: 50em;
+    position: fixed;
+    left: 13%;
+    top: 10.2%;
+}
+
+.list-menu{
+    height: 50%;
+    display: flex;
+    justify-content: space-around;
 }

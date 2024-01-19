@@ -1,8 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/index.html.twig' %}
 
 {% block title %}Register{% endblock %}
-{% block body %}
 
+{% block content %}
+    <style>
+        .custom-file-input{
+            border: 2px #5FA8BF solid;
+            width: 60%
+        }
+        .content-form{
+            margin-top:4em;
+        }
+        .form-register{
+            margin-top: 2em;
+        }
+        .button-register{
+            width: 30%; 
+            background-color: #5FA8BF; 
+            border: 2px #5FA8BF;
+        }
+    </style>
+    
 <h3 class="text-center fs-2 col-5">Insciption d'utilisateur</h3>
 <section class="content-form d-flex flex-column justify-content-center align-items-center text-center">
 
