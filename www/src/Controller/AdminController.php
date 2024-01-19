@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Fds;
+use App\Entity\Product;
 use App\Form\FdsType;
-use App\Repository\FdsRepository;
 use App\Service\FileManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

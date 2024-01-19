@@ -3,9 +3,14 @@
 {% block title %}Creation d'un produit{% endblock %}
 
 {% block body %}
-    <h1 style="margin-left: 5em;">Crée un produit</h1>
+
+    <h3 class="text-center fs-2 col-5">
+        {{ app.request.attributes.get('_route') == 'app_produit_create' ?
+        'Ajouter un produit' : 'Modifier le produit n°' ~ product.id }}
+    </h3>
+
     <section class="container d-flex align-items-center justify-content-center flex-wrap"
-             style="min-height: 80vh;"
+             style="min-height: 70vh;"
              id="section-register">
         {# Formulaire #}
         <div class="col-sm-12 col-md-12 col-lg-6 d-flex align-items-center justify-content-center">
@@ -14,12 +19,14 @@
                 'class' : 'col-8',
                 'id' : 'form-edit-create-product'
             }}) }}
+
             <div class="mb-4 col-12">
-            </div>
-            <div class="mb-4 col-12">
+                <div class="col-12 form-error">
+                    {{ form_errors(form.title) }}
+                </div>
                 {{ form_widget(form.title, {
                     'attr': {
-                        'class':            ' rounded-pill py-3 col-9 text-center border-blue-custom-raduis-1',
+                        'class':            'rounded-pill py-3 col-9 text-center border-blue-custom',
                         'id':               'input-title',
                         'aria-describedby': 'Nom du produit',
                         'placeholder':      'Nom du produit',
@@ -29,9 +36,12 @@
             </div>
 
             <div class="mb-4 col-12">
+                <div class="col-12 form-error">
+                    {{ form_errors(form.description) }}
+                </div>
                 {{ form_widget(form.description, {
                     'attr': {
-                        'class':            'py-3 col-12 text-center border-blue-custom-raduis-2',
+                        'class':            'py-3 col-12 text-center border-blue-custom border-raduis-1',
                         'id':               'input-description',
                         'aria-describedby': 'Description',
                         'placeholder':      'Description'
@@ -40,9 +50,12 @@
             </div>
 
             <div class="mb-4 col-12">
+                <div class="col-12 form-error">
+                    {{ form_errors(form.fileImg) }}
+                </div>
                 {{ form_widget(form.fileImg, {
                     'attr': {
-                        'class'            :'rounded-pill col-4 col-sm-6 col-lg-4 text-center border-blue-custom-raduis-1 custom-file-input',
+                        'class'            :'rounded-pill col-4 col-sm-6 col-lg-4 text-center border-blue-custom custom-file-input',
                         'aria-describedby' :'Fichier',
                         'placeholder'      :'Fichier',
                         'onchange'         :'getNameFile()'
@@ -54,9 +67,12 @@
                 </span>
             </div>
             <div class="mb-4 col-12">
+                <div class="col-12 form-error">
+                    {{ form_errors(form.price) }}
+                </div>
                 {{ form_widget(form.price, {
                     'attr': {
-                        'class':            'rounded-pill col-4 text-center border-blue-custom-raduis-1 col-sm-6 col-lg-4',
+                        'class':            'rounded-pill col-4 text-center border-blue-custom col-sm-6 col-lg-4',
                         'id':               'input-price',
                         'aria-describedby': 'Prix',
                         'placeholder':      'Prix'
@@ -65,7 +81,10 @@
             </div>
 
             <div class="btn-sumbit-form d-flex justify-content-center">
-                <button type="submit" class="py-2 border-blue-custom-raduis-1 bg-blue-custom rounded-pill text-center text-white col-7">Valider</button>
+                <button type="submit"
+                        class="py-2 border-blue-custom bg-blue-custom rounded-pill text-center text-white col-7">
+                    Valider
+                </button>
             </div>
             {{ form_end(form) }}
         </div>
