@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Fds;
+use App\Entity\Notification;
 use App\Form\FdsType;
 use App\Repository\FdsRepository;
+use App\Repository\ProductRepository;
 use App\Service\FileManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,11 +59,24 @@ class AdminController extends AbstractController
     }
 
     #[Route('/fds/edit/{id}', name: 'fds_edit')]
-    public function editFds(Request $request, FileManager $fm,  EntityManagerInterface $entityManager, Fds $fds): Response
+    public function editFds($id, Request $request, FileManager $fm,  EntityManagerInterface $entityManager, Fds $fds, FdsRepository $fdsRepository): Response
     {
         $form = $this->createForm(FdsType::class, $fds);
-
         $form->handleRequest($request);
+        
+        $notification  = new Notification();
+        $notification->setMessage('Le FDS ' . $fds->getTitle() . ' à été modifier');
+        $notification->setCreatedAt(new \DateTimeImmutable('now'));
+        $notification->setIsRead(false);
+        
+        $product = $fds->getProduct();
+        $users = $product->getUsers();
+        foreach ($users as $user){
+            $user->addNotification($notification);
+            $entityManager->persist($user);
+        }
+        $entityManager->persist($notification);
+
 
         $errors = $form->getErrors(true, false);
 
@@ -71,11 +86,9 @@ class AdminController extends AbstractController
                 $slugger = new AsciiSlugger();
                 $slug = $slugger->slug($fds->getTitle());
                 $filePath = $fm->upload($fileImg, $slug, '', true);
-
+                
                 $fds->setPath($filePath);
             }
-            $fds->setCreatedAt(new \DateTimeImmutable());
-
             $entityManager->persist($fds);
             $entityManager->flush();
 
